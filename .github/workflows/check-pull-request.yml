@@ -43,7 +43,7 @@ jobs:
         id: changed-files
         uses: ./.github/actions/check-pull-request-changed-files
         with:
-          changed-or-modified-files: ${{ needs.get-changed-files.outputs.changed-files }}
+          changed-and-modified-files: ${{ needs.get-changed-files.outputs.changed-files }}
 
   check-changed-or-modified-file:
     needs: [check-changed-and-modified-files]
