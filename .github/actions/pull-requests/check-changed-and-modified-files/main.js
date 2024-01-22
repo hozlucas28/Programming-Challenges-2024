@@ -2,6 +2,7 @@ const core = require('@actions/core')
 
 // Required data
 const changedAndModifiedFiles = core.getInput('changed-and-modified-files').split(' ')
+core.debug(`Changed and modified files: ${changedAndModifiedFiles}`)
 
 // Check if changed and modified files are valid
 const isValidFiles = changedAndModifiedFiles.length === 1
