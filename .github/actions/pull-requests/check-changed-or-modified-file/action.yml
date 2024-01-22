@@ -1,6 +1,7 @@
 author: 'hozlucas28'
-name: 'Check changed or modified file of a pull request'
-description: 'Check if changed or modified file of a pull request is valid'
+
+name: 'Check committed file'
+description: 'Check if the committed file of a pull request is valid'
 
 runs:
   using: 'node20'
@@ -14,7 +15,7 @@ inputs:
     description: 'Challenge number of the pull request title'
     required: true
   changed-or-modified-file:
-    description: 'Changed or modified file of the pull request'
+    description: 'Committed file of the pull request'
     required: true
   programming-language:
     description: 'Programming language name of the pull request title'

@@ -1,5 +1,6 @@
 author: 'hozlucas28'
-name: 'Check title of a pull request'
+
+name: 'Check title'
 description: 'Check if the title of a pull request is correct'
 
 runs:
@@ -13,6 +14,6 @@ inputs:
 
 outputs:
   challenge:
-    description: 'Challenge number based on the pull request title'
+    description: 'Challenge number based on the input title'
   programming-language:
-    description: 'Programming language name based on the pull request title'
+    description: 'Programming language name based on the "title" input'

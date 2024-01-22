@@ -1,6 +1,7 @@
 author: 'hozlucas28'
-name: 'Check changed and modified files of a pull request'
-description: 'Check if changed and modified files of a pull request are valid'
+
+name: 'Check committed files'
+description: 'Check if committed files of a pull request are valid'
 
 runs:
   using: 'node20'
@@ -8,9 +9,9 @@ runs:
 
 inputs:
   changed-or-modified-files:
-    description: 'Changed and modified files of the pull request'
+    description: 'Committed files of the pull request'
     required: true
 
 outputs:
   changed-or-modified-file:
-    description: 'Unique changed or modified file of the pull request'
+    description: 'Single committed file of the "changed-or-modified-files" input'
