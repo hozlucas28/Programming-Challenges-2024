@@ -1,0 +1,16 @@
+author: 'hozlucas28'
+name: 'Check pull request changed files'
+description: 'Check if the pull request changed files are just one file'
+
+runs:
+  using: 'node20'
+  main: 'main.js'
+
+inputs:
+  changed-files:
+    description: 'Changed files of the pull request'
+    required: true
+
+outputs:
+  changed-file:
+    description: 'Unique changed file of the pull request'
