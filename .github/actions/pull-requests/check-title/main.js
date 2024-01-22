@@ -16,15 +16,15 @@ const titleRegex = new RegExp(`#(${challengeNumbers.join('|')}) - (${programming
 const isValidChallengeNumber = challengeNumberRegex.test(title)
 if (!isValidChallengeNumber) {
 	const availableChallengeNumbers = challengeNumbers.reduce((prev, current, index, array) => {
-		if (index === 0) return current.toString()
-		if (index === array.length - 1) return prev + ', or ' + current
-		return prev + ', ' + current
-	})
+		if (index === 0) return `"${current}"`
+		if (index === array.length - 1) return prev + ', or ' + `"${current}"`
+		return prev + ', ' + `"${current}"`
+	}, challengeNumbers[0])
 
 	core.setFailed(
 		"Challenge number of the pull request title doesn't match with existing ones. " +
 			'Please check the challenge number of the pull request title. ' +
-			`It should be one of these: ${availableChallengeNumbers}` +
+			`It should be one of these: ${availableChallengeNumbers}. ` +
 			'If you think this is an error, please contact an administrator.'
 	)
 }
@@ -33,15 +33,15 @@ if (!isValidChallengeNumber) {
 const isValidProgrammingLanguageName = programmingLanguageNameRegex.test(title)
 if (!isValidProgrammingLanguageName) {
 	const availableProgrammingLanguageNames = programmingLanguageNames.reduce((prev, current, index, array) => {
-		if (index === 0) return current
-		if (index === array.length - 1) return prev + ', or ' + current
-		return prev + ', ' + current
-	})
+		if (index === 0) return `"${current}"`
+		if (index === array.length - 1) return prev + ', or ' + `"${current}"`
+		return prev + ', ' + `"${current}"`
+	}, programmingLanguageNames[0])
 
 	core.setFailed(
 		"Programming language name of the pull request title doesn't match with existing ones. " +
 			'Please check the programming language name of the pull request title. ' +
-			`It should be one of these: ${availableProgrammingLanguageNames}` +
+			`It should be one of these: ${availableProgrammingLanguageNames}. ` +
 			'If you think this is an error, please contact an administrator.'
 	)
 }
@@ -58,8 +58,8 @@ if (isValidChallengeNumber && isValidProgrammingLanguageName) {
 		// On invalid title, set the action as failed
 		core.setFailed(
 			'Invalid pull request title format. ' +
-				'It should be: #<CHALLENGE NUMBER> - <LANGUAGE NAME>. ' +
-				'For example: #01 - JavaScript'
+				'It should be: "#<CHALLENGE NUMBER> - <LANGUAGE NAME>". ' +
+				'For example: "#01 - JavaScript".'
 		)
 	}
 }

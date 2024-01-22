@@ -24,7 +24,7 @@ if (challengeProps && languageProps) {
 		core.setFailed(
 			"Directory of the changed or modified file of the pull request doesn't match with the challenge and programming language of the pull request title. " +
 				'Please check the directory of the changed or modified file of the pull request. ' +
-				`It should be: ${expectedDirectory}` +
+				`It should be: "${expectedDirectory}". ` +
 				'If you think this is an error, please contact an administrator.'
 		)
 	}
@@ -35,7 +35,7 @@ if (challengeProps && languageProps) {
 		core.setFailed(
 			"File name of the changed or modified file of the pull request doesn't match with the author name. " +
 				'Please check the file name of the changed or modified file of the pull request. ' +
-				`It should be: ${author}` +
+				`It should be: "${author}". ` +
 				'If you think this is an error, please contact an administrator.'
 		)
 	}
@@ -46,7 +46,7 @@ if (challengeProps && languageProps) {
 		core.setFailed(
 			"File extension name of the changed or modified file of the pull request doesn't match with the programming language of the pull request title. " +
 				'Please check the file extension name of the changed or modified file of the pull request. ' +
-				`It should be: ${languageFileExtension}` +
+				`It should be: "${languageFileExtension}". ` +
 				'If you think this is an error, please contact an administrator.'
 		)
 	}
