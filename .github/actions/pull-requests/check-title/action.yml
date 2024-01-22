@@ -12,7 +12,7 @@ inputs:
     required: true
 
 outputs:
-  challenge-number:
+  challenge:
     description: 'Challenge number based on the pull request title'
-  programming-language-name:
+  programming-language:
     description: 'Programming language name based on the pull request title'

@@ -10,12 +10,12 @@ inputs:
   author:
     description: 'Name of the user who created the pull request'
     required: true
-  challenge-number:
+  challenge:
     description: 'Challenge number of the pull request title'
     required: true
   changed-or-modified-file:
     description: 'Changed or modified file of the pull request'
     required: true
-  programming-language-name:
+  programming-language:
     description: 'Programming language name for compare with the changed or modified file extension of the pull request'
     required: true
