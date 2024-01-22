@@ -1,0 +1,12 @@
+author: 'hozlucas28'
+name: 'Check pull request title'
+description: 'Check if the pull request title matches'
+
+runs:
+  using: 'node20'
+  main: 'main.js'
+
+inputs:
+  pull-request-title:
+    description: 'Pull request title'
+    required: true
