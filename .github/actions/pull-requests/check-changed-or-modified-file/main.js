@@ -1,53 +1,55 @@
-const core = require('@actions/core')
-const path = require('node:path')
-const utils = require('../../utils.js')
+import { debug, getInput, setFailed } from '@actions/core'
+import * as path from 'node:path'
+import { getChallengeFolder, getProgrammingLanguageExtension, wrapperChallengesFolder } from '../../utils.js'
+
+// Inputs
+const author = getInput('author')
+const committedFile = getInput('committed-file')
+const title = getInput('title')
+debug(`'author' (input): ${author}`)
+debug(`'committed-file' (input): ${committedFile}`)
+debug(`'title' (input): ${title}`)
 
 // Required data
-const author = core.getInput('author')
-const challenge = core.getInput('challenge')
-const changedOrModifiedFile = core.getInput('changed-or-modified-file')
-const programmingLanguage = core.getInput('programming-language')
+const titleProps = {
+	challenge: title.slice(1, 3),
+	language: title.slice(6).toLowerCase(),
+}
 
-const changedOrModifiedFileProps = path.parse(changedOrModifiedFile)
-const challengeProps = utils.challenges.getChallengeProps(challenge)
-const languageProps = utils.programmingLanguages.getLanguageProps(programmingLanguage)
+const challengeFolder = getChallengeFolder(titleProps.challenge)
+const committedFileProps = path.parse(committedFile)
 
-// By the required actions we know that the challenge and language exists
-if (challengeProps && languageProps) {
-	const { folderName: challengeFolder } = challengeProps
-	const { folderName: languageFolder, fileExtension: languageFileExtension } = languageProps
-	const expectedDirectory = path.join('Roadmap', challengeFolder, languageFolder ?? '')
+// Check if directory is valid
+const expectedDirectory = path.join(wrapperChallengesFolder, challengeFolder, titleProps.language)
+const isValidDirectory = path.normalize(committedFileProps.dir) === expectedDirectory
+if (!isValidDirectory) {
+	setFailed(
+		"Directory of committed file doesn't match with the challenge and programming language of the pull request title. " +
+			'Please check the directory of committed file of the pull request. ' +
+			`It should be: '${expectedDirectory}'. ` +
+			'If you think this is an error, please contact an administrator.'
+	)
+}
 
-	// Check if directory is valid
-	const isValidDirectory = changedOrModifiedFileProps.dir === expectedDirectory
-	if (!isValidDirectory) {
-		core.setFailed(
-			"Directory of the changed or modified file of the pull request doesn't match with the challenge and programming language of the pull request title. " +
-				'Please check the directory of the changed or modified file of the pull request. ' +
-				`It should be: "${expectedDirectory}". ` +
-				'If you think this is an error, please contact an administrator.'
-		)
-	}
+// Check if file name is valid
+const isValidFileName = committedFileProps.name === author
+if (!isValidFileName) {
+	setFailed(
+		"File name of committed file doesn't match with the author name. " +
+			'Please check the file name of committed file of the pull request. ' +
+			`It should be: '${author}'. ` +
+			'If you think this is an error, please contact an administrator.'
+	)
+}
 
-	// Check if file name is valid
-	const isValidFileName = changedOrModifiedFileProps.name === author
-	if (!isValidFileName) {
-		core.setFailed(
-			"File name of the changed or modified file of the pull request doesn't match with the author name. " +
-				'Please check the file name of the changed or modified file of the pull request. ' +
-				`It should be: "${author}". ` +
-				'If you think this is an error, please contact an administrator.'
-		)
-	}
-
-	// Check if file extension is valid
-	const isValidFileExtension = changedOrModifiedFileProps.ext === languageFileExtension
-	if (!isValidFileExtension) {
-		core.setFailed(
-			"File extension name of the changed or modified file of the pull request doesn't match with the programming language of the pull request title. " +
-				'Please check the file extension name of the changed or modified file of the pull request. ' +
-				`It should be: "${languageFileExtension}". ` +
-				'If you think this is an error, please contact an administrator.'
-		)
-	}
+// Check if file extension is valid
+const expectedFileExtension = getProgrammingLanguageExtension(titleProps.language)
+const isValidFileExtension = committedFileProps.ext === expectedFileExtension
+if (!isValidFileExtension) {
+	setFailed(
+		"File extension of committed file doesn't match with the programming language name of the pull request title. " +
+			'Please check the file extension name of committed file of the pull request. ' +
+			`It should be: '${expectedFileExtension}'. ` +
+			'If you think this is an error, please contact an administrator.'
+	)
 }
