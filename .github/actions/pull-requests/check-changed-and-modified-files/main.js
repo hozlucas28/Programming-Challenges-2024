@@ -9,7 +9,7 @@ const isValidFiles = changedAndModifiedFiles.length === 1
 
 if (isValidFiles) {
 	// On valid files, set the output
-	core.setOutput('changed-file', changedAndModifiedFiles[0])
+	core.setOutput('changed-or-modified-file', changedAndModifiedFiles[0])
 } else {
 	// On invalid files, set the action as failed
 	core.setFailed(
