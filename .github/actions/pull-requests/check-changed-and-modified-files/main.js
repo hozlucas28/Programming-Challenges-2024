@@ -6,7 +6,7 @@ core.debug(`'committed-files' (input): ${committedFiles}`)
 
 // Check if changed and modified files are valid
 const isValidCommittedFiles = committedFiles.length === 1
-core.debug(`Is valid committed files: ${isValidCommittedFiles}`)
+core.debug(`Is valid committed files? ${isValidCommittedFiles}`)
 
 if (isValidCommittedFiles) {
 	// On valid files, set the output
