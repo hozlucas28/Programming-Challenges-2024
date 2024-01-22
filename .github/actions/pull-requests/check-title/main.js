@@ -70,8 +70,8 @@ if (isValidChallenge && isValidLanguageName) {
 		// On invalid title, set the action as failed
 		setFailed(
 			'Invalid pull request title format. ' +
-				'It should be: "#<CHALLENGE NUMBER> - <LANGUAGE NAME>". ' +
-				'For example: "#01 - Javascript".'
+				"It should be: '#<CHALLENGE NUMBER> - <LANGUAGE NAME>'. " +
+				"For example: '#01 - Javascript'."
 		)
 	}
 }
