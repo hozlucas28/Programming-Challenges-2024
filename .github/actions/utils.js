@@ -1,27 +1,17 @@
 const data = require('./data.json')
 const stats = require('../../Roadmap/stats.json')
 
-// Languages
-function getLanguagesExtensions() {
-	return data.languages.map(({ fileExtension }) => fileExtension)
+const challenges = {
+	getFolderNames: () => stats.challenges_ranking.map(({ name }) => name),
 }
 
-function getLanguagesFoldersNames() {
-	return data.languages.map(({ folderName }) => folderName)
-}
-
-function getLanguagesNames() {
-	return data.languages.map(({ name }) => name)
-}
-
-// Challenges
-function getChallengesFoldersNames() {
-	return stats.challenges_ranking.map(({ name }) => name)
+const programmingLanguages = {
+	getExtensionNames: () => data.languages.map(({ fileExtensionName }) => fileExtensionName),
+	getFolderNames: () => data.languages.map(({ folderName }) => folderName),
+	getNames: () => data.languages.map(({ names }) => names).flat(),
 }
 
 module.exports = {
-	getLanguagesExtensions,
-	getLanguagesFoldersNames,
-	getLanguagesNames,
-	getChallengesFoldersNames,
+	challenges,
+	programmingLanguages,
 }
