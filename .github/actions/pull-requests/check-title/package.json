@@ -7,6 +7,6 @@
 	"keywords": [],
 	"license": "MIT",
 	"main": "main.js",
-	"name": "check-pull-request-title",
+	"name": "check-title",
 	"version": "1.0.0"
 }

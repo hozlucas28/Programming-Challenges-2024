@@ -7,6 +7,6 @@
 	"keywords": [],
 	"license": "MIT",
 	"main": "main.js",
-	"name": "check-pull-request-changed-files",
+	"name": "check-changed-and-modified-files",
 	"version": "1.0.0"
 }

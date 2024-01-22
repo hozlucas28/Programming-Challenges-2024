@@ -12,7 +12,7 @@ jobs:
       - name: Clone repository to virtual machine
         uses: actions/checkout@v4
       - name: Check title
-        uses: ./.github/actions/check-pull-request-title
+        uses: ./.github/actions/pull-requests/check-title
         with:
           title: ${{ github.event.pull_request.title }}
 
@@ -41,7 +41,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Check changed and modified files
         id: changed-files
-        uses: ./.github/actions/check-pull-request-changed-files
+        uses: ./.github/actions/pull-requests/check-changed-and-modified-files
         with:
           changed-and-modified-files: ${{ needs.get-changed-files.outputs.changed-files }}
 
@@ -53,6 +53,6 @@ jobs:
       - name: Clone repository to virtual machine
         uses: actions/checkout@v4
       - name: Check the unique changed or modified file
-        uses: ./.github/actions/check-pull-request-changed-or-modified-file
+        uses: ./.github/actions/pull-requests/check-changed-or-modified-file
         with:
           changed-or-modified-file: ${{ needs.check-changed-and-modified-files.outputs.changed-file }}
