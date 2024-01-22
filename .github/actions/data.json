@@ -6,7 +6,7 @@
 			"names": ["JavaScript"]
 		},
 		{
-			"fileExtension": "py",
+			"fileExtensionName": "py",
 			"folderName": "python",
 			"names": ["Python"]
 		}
