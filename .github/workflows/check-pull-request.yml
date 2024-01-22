@@ -12,8 +12,8 @@ jobs:
     name: Check title of the pull request
     runs-on: ubuntu-latest
     outputs:
-      challenge-number: ${{ steps.check-title.outputs.challenge-number }}
-      programming-language-name: ${{ steps.check-title.outputs.programming-language-name }}
+      challenge: ${{ steps.check-title.outputs.challenge }}
+      programming-language: ${{ steps.check-title.outputs.programming-language }}
     steps:
       - name: Clone repository to virtual machine
         uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
     name: Get changed and modified files of the pull request
     runs-on: ubuntu-latest
     outputs:
-      changed-files: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
+      changed-and-modified-files: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
     steps:
       - name: Clone repository to virtual machine
         uses: actions/checkout@v4
@@ -42,7 +42,7 @@ jobs:
     name: Check changed and modified files of the pull request
     runs-on: ubuntu-latest
     outputs:
-      changed-file: ${{ steps.changed-files.outputs.changed-file }}
+      changed-or-modified-file: ${{ steps.changed-files.outputs.changed-or-modified-file }}
     steps:
       - name: Clone repository to virtual machine
         uses: actions/checkout@v4
@@ -50,7 +50,7 @@ jobs:
         id: changed-files
         uses: ./.github/actions/pull-requests/check-changed-and-modified-files
         with:
-          changed-and-modified-files: ${{ needs.get-changed-files.outputs.changed-files }}
+          changed-and-modified-files: ${{ needs.get-changed-files.outputs.changed-and-modified-files }}
 
   check-changed-or-modified-file:
     needs: [check-title, check-changed-and-modified-files]
@@ -63,6 +63,6 @@ jobs:
         uses: ./.github/actions/pull-requests/check-changed-or-modified-file
         with:
           author: ${{ github.event.pull_request.user.name }}
-          challenge-number: ${{ needs.check-title.outputs.challenge-number }}
-          changed-or-modified-file: ${{ needs.check-changed-and-modified-files.outputs.changed-file }}
-          programming-language-name: ${{ needs.check-title.outputs.programming-language-name }}
+          challenge: ${{ needs.check-title.outputs.challenge }}
+          changed-or-modified-file: ${{ needs.check-changed-and-modified-files.outputs.changed-or-modified-file }}
+          programming-language: ${{ needs.check-title.outputs.programming-language }}
