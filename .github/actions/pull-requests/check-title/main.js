@@ -1,78 +1,77 @@
-const core = require('@actions/core')
-const utils = require('../../utils.js')
-const process = require('node:process')
+import { debug, getInput, setFailed } from '@actions/core'
+import { arraytoString, getChallengeNumbers, getProgrammingLanguageFolderNames } from '../../utils.js'
 
 // Inputs
-const title = core.getInput('title')
-core.debug(`'title' (input): ${title}`)
+const title = getInput('title')
+debug(`'title' (input): ${title}`)
 
 // Required data
-const challenges = utils.challenges.getNumbers()
-const languageNames = utils.programmingLanguages.getNames()
-core.debug(`Available challenge numbers: ${challenges}`)
-core.debug(`Available names of programming languages: ${languageNames}`)
+const challenges = getChallengeNumbers()
+const languageNames = getProgrammingLanguageFolderNames()
+debug(`Available challenge numbers: ${challenges}`)
+debug(`Available names of programming languages: ${languageNames}`)
 
 const challengesJoined = challenges.join('|')
 const languageNamesJoined = languageNames.join('|')
 
 // Regular expressions
-const challengeNumberRegex = new RegExp(`#(${challengesJoined})`)
-const programmingLanguageNameRegex = new RegExp(`(${languageNamesJoined})+$`)
-core.debug(`Challenge number regular expression: ${challengeNumberRegex}`)
-core.debug(`Programming language name regular expression: ${programmingLanguageNameRegex}`)
+const challengeRegex = new RegExp(`#(${challengesJoined})`)
+const languageNameRegex = new RegExp(`(${languageNamesJoined})+$`, 'i')
+debug(`Challenge number regular expression: ${challengeRegex}`)
+debug(`Programming language name regular expression: ${languageNameRegex}`)
 
 // Check if challenge number is valid
-const isValidChallengeNumber = challengeNumberRegex.test(title)
-core.debug(`Is valid challenge number? ${isValidChallengeNumber}`)
+const isValidChallenge = challengeRegex.test(title)
+debug(`Is valid challenge number? ${isValidChallenge}`)
 
-if (!isValidChallengeNumber) {
-	const availableChallengeNumbers = utils.formatArraytoString({
+if (!isValidChallenge) {
+	const availableChallenges = arraytoString({
 		array: challenges,
 		finalSeparator: ', or ',
 		separator: ', ',
 	})
 
-	core.setFailed(
+	setFailed(
 		"Challenge number of the pull request title doesn't match with existing ones. " +
 			'Please check the challenge number of the pull request title. ' +
-			`It should be one of these: ${availableChallengeNumbers}. ` +
+			`It should be one of these: ${availableChallenges}. ` +
 			'If you think this is an error, please contact an administrator.'
 	)
 }
 
 // Check if programming language name is valid
-const isValidProgrammingLanguageName = programmingLanguageNameRegex.test(title)
-core.debug(`Is valid programming language name? ${isValidProgrammingLanguageName}`)
+const isValidLanguageName = languageNameRegex.test(title)
+debug(`Is valid programming language name? ${isValidLanguageName}`)
 
-if (!isValidProgrammingLanguageName) {
-	const availableProgrammingLanguageNames = utils.formatArraytoString({
+if (!isValidLanguageName) {
+	const availableLanguageNames = arraytoString({
 		array: languageNames,
 		finalSeparator: ', or ',
 		separator: ', ',
 	})
 
-	core.setFailed(
+	setFailed(
 		"Programming language name of the pull request title doesn't match with existing ones. " +
 			'Please check the programming language name of the pull request title. ' +
-			`It should be one of these: ${availableProgrammingLanguageNames}. ` +
+			`It should be one of these: ${availableLanguageNames}. ` +
 			'If you think this is an error, please contact an administrator.'
 	)
 }
 
-if (isValidChallengeNumber && isValidProgrammingLanguageName) {
-	const titleFormatRegex = new RegExp(`#(${challengesJoined}) - (${languageNamesJoined})`)
-	core.debug(`Title format regular expression: ${titleFormatRegex}`)
+if (isValidChallenge && isValidLanguageName) {
+	const titleFormatRegex = new RegExp(`#(${challengesJoined}) - (${languageNamesJoined})`, 'i')
+	debug(`Title format regular expression: ${titleFormatRegex}`)
 
 	const matches = title.match(titleFormatRegex)
 	const isValidTitleFormat = matches && matches.length > 0
-	core.debug(`Is valid title format? ${isValidTitleFormat}`)
+	debug(`Is valid title format? ${isValidTitleFormat}`)
 
 	if (!isValidTitleFormat) {
 		// On invalid title, set the action as failed
-		core.setFailed(
+		setFailed(
 			'Invalid pull request title format. ' +
 				'It should be: "#<CHALLENGE NUMBER> - <LANGUAGE NAME>". ' +
-				'For example: "#01 - JavaScript".'
+				'For example: "#01 - Javascript".'
 		)
 	}
 }
