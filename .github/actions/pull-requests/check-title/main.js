@@ -2,21 +2,32 @@ const core = require('@actions/core')
 const utils = require('../../utils.js')
 const process = require('node:process')
 
-// Required data
+// Inputs
 const title = core.getInput('title')
-const challengeNumbers = utils.challenges.getNumbers()
-const programmingLanguageNames = utils.programmingLanguages.getNames()
+core.debug(`'title' (input): ${title}`)
+
+// Required data
+const challenges = utils.challenges.getNumbers()
+const languageNames = utils.programmingLanguages.getNames()
+core.debug(`Available challenge numbers: ${challenges}`)
+core.debug(`Available names of programming languages: ${languageNames}`)
+
+const challengesJoined = challenges.join('|')
+const languageNamesJoined = languageNames.join('|')
 
 // Regular expressions
-const challengeNumberRegex = new RegExp(`#(${challengeNumbers.join('|')})`)
-const programmingLanguageNameRegex = new RegExp(`(${programmingLanguageNames.join('|')})+$`)
-const titleRegex = new RegExp(`#(${challengeNumbers.join('|')}) - (${programmingLanguageNames.join('|')})`)
+const challengeNumberRegex = new RegExp(`#(${challengesJoined})`)
+const programmingLanguageNameRegex = new RegExp(`(${languageNamesJoined})+$`)
+core.debug(`Challenge number regular expression: ${challengeNumberRegex}`)
+core.debug(`Programming language name regular expression: ${programmingLanguageNameRegex}`)
 
 // Check if challenge number is valid
 const isValidChallengeNumber = challengeNumberRegex.test(title)
+core.debug(`Is valid challenge number? ${isValidChallengeNumber}`)
+
 if (!isValidChallengeNumber) {
 	const availableChallengeNumbers = utils.formatArraytoString({
-		array: challengeNumbers,
+		array: challenges,
 		finalSeparator: ', or ',
 		separator: ', ',
 	})
@@ -31,9 +42,11 @@ if (!isValidChallengeNumber) {
 
 // Check if programming language name is valid
 const isValidProgrammingLanguageName = programmingLanguageNameRegex.test(title)
+core.debug(`Is valid programming language name? ${isValidProgrammingLanguageName}`)
+
 if (!isValidProgrammingLanguageName) {
 	const availableProgrammingLanguageNames = utils.formatArraytoString({
-		array: programmingLanguageNames,
+		array: languageNames,
 		finalSeparator: ', or ',
 		separator: ', ',
 	})
@@ -47,14 +60,14 @@ if (!isValidProgrammingLanguageName) {
 }
 
 if (isValidChallengeNumber && isValidProgrammingLanguageName) {
-	const matches = title.match(titleRegex)
-	const isValidTitle = matches && matches.length > 0
+	const titleFormatRegex = new RegExp(`#(${challengesJoined}) - (${languageNamesJoined})`)
+	core.debug(`Title format regular expression: ${titleFormatRegex}`)
 
-	if (isValidTitle) {
-		// On valid title, set the outputs
-		core.setOutput('challenge', matches[1])
-		core.setOutput('programming-language', matches[2])
-	} else {
+	const matches = title.match(titleFormatRegex)
+	const isValidTitleFormat = matches && matches.length > 0
+	core.debug(`Is valid title format? ${isValidTitleFormat}`)
+
+	if (!isValidTitleFormat) {
 		// On invalid title, set the action as failed
 		core.setFailed(
 			'Invalid pull request title format. ' +
