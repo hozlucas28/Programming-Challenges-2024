@@ -2,10 +2,13 @@ const data = require('./data.json')
 const stats = require('../../Roadmap/stats.json')
 
 const challenges = {
-	getChallengeProps: (/** @type {string} */ challengeNumber) => {
+	getNumbers: () => challenges.getChallengesProps().map(({ number }) => number),
+
+	getChallengeProps: (challengeNumber) => {
 		const challengesProps = challenges.getChallengesProps()
 		return challengesProps.find(({ number }) => number === challengeNumber)
 	},
+
 	getChallengesProps: () =>
 		stats.challenges_ranking.map(({ name }) => {
 			const separatorIndex = name.indexOf('-')
@@ -16,17 +19,22 @@ const challenges = {
 				title: name.slice(separatorIndex + 1).trim(),
 			}
 		}),
-	getNumbers: () => challenges.getChallengesProps().map(({ number }) => number),
 }
 
 const programmingLanguages = {
-	getExtensionNames: () => data.languages.map(({ fileExtensionName }) => fileExtensionName),
-	getFolderNames: () => data.languages.map(({ folderName }) => folderName),
-	getLanguageProps: (/** @type {string} */ programmingLanguageName) => {
-		const language = data.languages.find(({ names }) => names.includes(programmingLanguageName))
-		return language
+	getExtensionNames: () => data.languages.map(({ fileExtension }) => fileExtension),
+	getFolderNames: () => stats.languages_ranking.map(({ name }) => name),
+	getNames: () => data.languages.map(({ name }) => name).flat(),
+
+	getLanguageProps: (programmingLanguage) => {
+		const language = data.languages.find(({ name }) => name === programmingLanguage)
+		const folderName = stats.languages_ranking.find(({ name }) => name.toLowerCase() === programmingLanguage.toLowerCase())?.name
+
+		return {
+			...language,
+			folderName,
+		}
 	},
-	getNames: () => data.languages.map(({ names }) => names).flat(),
 }
 
 module.exports = {
