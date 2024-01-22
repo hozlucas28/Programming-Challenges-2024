@@ -2,6 +2,7 @@ name: 'Check pull request'
 
 on:
   pull_request:
+    branches: [main]
     types: [opened, reopened, edited, synchronize]
     paths:
       - 'Roadmap/**'
@@ -61,3 +62,6 @@ jobs:
           author: ${{ github.event.pull_request.user.name }}
           committed-file: ${{ needs.check-committed-files.outputs.committed-file }}
           title: ${{ github.event.pull_request.title }}
+
+permissions:
+  pull-requests: read
