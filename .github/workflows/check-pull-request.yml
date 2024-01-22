@@ -8,10 +8,14 @@ jobs:
   check-title:
     name: Check title of the pull request
     runs-on: ubuntu-latest
+    outputs:
+      challenge-number: ${{ steps.check-title.outputs.challenge-number }}
+      programming-language-name: ${{ steps.check-title.outputs.programming-language-name }}
     steps:
       - name: Clone repository to virtual machine
         uses: actions/checkout@v4
       - name: Check title
+        id: check-title
         uses: ./.github/actions/pull-requests/check-title
         with:
           title: ${{ github.event.pull_request.title }}
@@ -46,7 +50,7 @@ jobs:
           changed-and-modified-files: ${{ needs.get-changed-files.outputs.changed-files }}
 
   check-changed-or-modified-file:
-    needs: [check-changed-and-modified-files]
+    needs: [check-title, check-changed-and-modified-files]
     name: Check the unique changed or modified file of the pull request
     runs-on: ubuntu-latest
     steps:
@@ -55,4 +59,7 @@ jobs:
       - name: Check the unique changed or modified file
         uses: ./.github/actions/pull-requests/check-changed-or-modified-file
         with:
+          author: ${{ github.event.pull_request.user.name }}
+          challenge-number: ${{ needs.check-title.outputs.challenge-number }}
           changed-or-modified-file: ${{ needs.check-changed-and-modified-files.outputs.changed-file }}
+          programming-language-name: ${{ needs.check-title.outputs.programming-language-name }}
