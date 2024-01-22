@@ -3,6 +3,9 @@ name: 'Check pull request'
 on:
   pull_request:
     types: [opened, reopened, edited, synchronize]
+    paths:
+      - 'Roadmap/**'
+      - '!Roadmap/**/*.md'
 
 jobs:
   check-title:
