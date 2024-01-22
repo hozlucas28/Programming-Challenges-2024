@@ -2,17 +2,15 @@ const core = require('@actions/core')
 const utils = require('../utils.js')
 
 // Required data
-const pullrequestTitle = core.getInput('title')
-const languagesNames = utils.getLanguagesNames()
+const title = core.getInput('title')
+const programmingLanguageNames = utils.programmingLanguages.getNames()
 
 // Check if the pull request title is valid
-const regex = new RegExp(`#[0-9][0-9] - (${languagesNames.join('|')})`)
-const isValidPullRequestTitle = (pullrequestTitle.match(regex)?.length ?? 0) > 0
+const regex = new RegExp(`#[0-9][0-9] - (${programmingLanguageNames.join('|')})`)
+const isValidTitle = (title.match(regex)?.length ?? 0) > 0
 
-if (!isValidPullRequestTitle)
+if (!isValidTitle)
 	// On invalid pull request title, set the action as failed
 	core.setFailed(
-		'Invalid pull request title.\n' +
-			'Should follow this format: #<CHALLENGE NUMBER> - <LANGUAGE NAME>\n' +
-			'For example: #01 - JavaScript'
+		'Invalid pull request title. Should follow this format: #<CHALLENGE NUMBER> - <LANGUAGE NAME>. For example: #01 - JavaScript '
 	)
