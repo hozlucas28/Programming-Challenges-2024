@@ -17,5 +17,5 @@ inputs:
     description: 'Changed or modified file of the pull request'
     required: true
   programming-language:
-    description: 'Programming language name for compare with the changed or modified file extension of the pull request'
+    description: 'Programming language name of the pull request title'
     required: true
