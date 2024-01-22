@@ -15,11 +15,11 @@ const titleRegex = new RegExp(`#(${challengeNumbers.join('|')}) - (${programming
 // Check if challenge number is valid
 const isValidChallengeNumber = challengeNumberRegex.test(title)
 if (!isValidChallengeNumber) {
-	const availableChallengeNumbers = challengeNumbers.reduce((prev, current, index, array) => {
-		if (index === 0) return `"${current}"`
-		if (index === array.length - 1) return prev + ', or ' + `"${current}"`
-		return prev + ', ' + `"${current}"`
-	}, challengeNumbers[0])
+	const availableChallengeNumbers = utils.formatArraytoString({
+		array: challengeNumbers,
+		finalSeparator: ', or ',
+		separator: ', ',
+	})
 
 	core.setFailed(
 		"Challenge number of the pull request title doesn't match with existing ones. " +
@@ -32,11 +32,11 @@ if (!isValidChallengeNumber) {
 // Check if programming language name is valid
 const isValidProgrammingLanguageName = programmingLanguageNameRegex.test(title)
 if (!isValidProgrammingLanguageName) {
-	const availableProgrammingLanguageNames = programmingLanguageNames.reduce((prev, current, index, array) => {
-		if (index === 0) return `"${current}"`
-		if (index === array.length - 1) return prev + ', or ' + `"${current}"`
-		return prev + ', ' + `"${current}"`
-	}, programmingLanguageNames[0])
+	const availableProgrammingLanguageNames = utils.formatArraytoString({
+		array: programmingLanguageNames,
+		finalSeparator: ', or ',
+		separator: ', ',
+	})
 
 	core.setFailed(
 		"Programming language name of the pull request title doesn't match with existing ones. " +

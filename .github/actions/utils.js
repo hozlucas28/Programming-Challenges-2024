@@ -21,6 +21,20 @@ const challenges = {
 		}),
 }
 
+function formatArraytoString({ array, finalSeparator, separator }) {
+	const lastElementI = array.length - 1
+
+	const stringifiedArray = array.reduce((prev, current, index) => {
+		const currentFmt = `"${current}"`
+
+		if (index === 0) return currentFmt
+		if (index === lastElementI) return prev + finalSeparator + currentFmt
+		return prev + separator + currentFmt
+	}, array[0])
+
+	return stringifiedArray
+}
+
 const programmingLanguages = {
 	getExtensionNames: () => data.languages.map(({ fileExtension }) => fileExtension),
 	getFolderNames: () => stats.languages_ranking.map(({ name }) => name),
@@ -28,7 +42,9 @@ const programmingLanguages = {
 
 	getLanguageProps: (programmingLanguage) => {
 		const language = data.languages.find(({ name }) => name === programmingLanguage)
-		const folderName = stats.languages_ranking.find(({ name }) => name.toLowerCase() === programmingLanguage.toLowerCase())?.name
+		const folderName = stats.languages_ranking.find(
+			({ name }) => name.toLowerCase() === programmingLanguage.toLowerCase()
+		)?.name
 
 		return {
 			...language,
@@ -39,5 +55,6 @@ const programmingLanguages = {
 
 module.exports = {
 	challenges,
+	formatArraytoString,
 	programmingLanguages,
 }
