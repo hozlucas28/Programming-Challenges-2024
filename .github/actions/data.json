@@ -1,0 +1,14 @@
+{
+	"languages": [
+		{
+			"fileExtension": "js",
+			"folderName": "javascript",
+			"name": "JavaScript"
+		},
+		{
+			"fileExtension": "py",
+			"folderName": "python",
+			"name": "Python"
+		}
+	]
+}
