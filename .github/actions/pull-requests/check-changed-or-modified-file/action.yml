@@ -11,12 +11,9 @@ inputs:
   author:
     description: 'Name of the user who created the pull request'
     required: true
-  challenge:
-    description: 'Challenge number of the pull request title'
-    required: true
-  changed-or-modified-file:
+  committed-file:
     description: 'Committed file of the pull request'
     required: true
-  programming-language:
-    description: 'Programming language name of the pull request title'
+  title:
+    description: 'Title of the pull request'
     required: true
