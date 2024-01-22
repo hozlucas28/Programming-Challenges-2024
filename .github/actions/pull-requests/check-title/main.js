@@ -52,8 +52,8 @@ if (isValidChallengeNumber && isValidProgrammingLanguageName) {
 
 	if (isValidTitle) {
 		// On valid title, set the outputs
-		core.setOutput('challenge-number', matches[1])
-		core.setOutput('programming-language-name', matches[2])
+		core.setOutput('challenge', matches[1])
+		core.setOutput('programming-language', matches[2])
 	} else {
 		// On invalid title, set the action as failed
 		core.setFailed(
