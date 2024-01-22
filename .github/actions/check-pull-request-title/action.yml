@@ -1,6 +1,6 @@
 author: 'hozlucas28'
-name: 'Check title of the pull request'
-description: 'Check if the title of the pull request is correct'
+name: 'Check title of a pull request'
+description: 'Check if the title of a pull request is correct'
 
 runs:
   using: 'node20'
@@ -8,5 +8,5 @@ runs:
 
 inputs:
   title:
-    description: 'Pull request title'
+    description: 'Title of the pull request'
     required: true

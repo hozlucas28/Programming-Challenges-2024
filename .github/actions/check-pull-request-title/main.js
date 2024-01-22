@@ -12,5 +12,7 @@ const isValidTitle = (title.match(regex)?.length ?? 0) > 0
 if (!isValidTitle)
 	// On invalid title, set the action as failed
 	core.setFailed(
-		'Invalid pull request title. Should follow this format: #<CHALLENGE NUMBER> - <LANGUAGE NAME>. For example: #01 - JavaScript '
+		'Invalid pull request title. ' +
+			'Should follow this format: #<CHALLENGE NUMBER> - <LANGUAGE NAME>. ' +
+			'For example: #01 - JavaScript'
 	)
