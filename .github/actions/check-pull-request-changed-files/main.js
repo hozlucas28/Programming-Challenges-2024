@@ -1,11 +1,19 @@
 const core = require('@actions/core')
 
 // Required data
-const changedFiles = core.getInput('changed-files').split(' ')
-core.info(`changedFiles: ${changedFiles}\ntype: ${typeof changedFiles}`)
+const changedAndModifiedFiles = core.getInput('changed-and-modified-files').split(' ')
 
-// if (changedFiles !== 1)
-// On invalid pull request changed files, set the action as failed
-// core.setFailed('Pull request must change exactly one file')
+// Check if changed and modified files are valid
+const isValidFiles = changedAndModifiedFiles.length === 1
 
-core.setOutput('changed-file', changedFiles[0])
+if (isValidFiles) {
+	// On valid files, set the output
+	core.setOutput('changed-file', changedAndModifiedFiles[0])
+} else {
+	// On invalid files, set the action as failed
+	core.setFailed(
+		'Pull request must change or modified exactly one file. ' +
+			'Please, check the pull request and try again. ' +
+			'If you think this is an error, please contact an administrator.'
+	)
+}
