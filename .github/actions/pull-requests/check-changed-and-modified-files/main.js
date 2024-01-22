@@ -1,20 +1,24 @@
 const core = require('@actions/core')
 
-// Required data
-const changedAndModifiedFiles = core.getInput('changed-and-modified-files').split(' ')
-core.debug(`Changed and modified files: ${changedAndModifiedFiles}`)
+// Inputs
+const committedFiles = core.getInput('committed-files').split(' ')
+core.debug(`'committed-files' (input): ${committedFiles}`)
 
 // Check if changed and modified files are valid
-const isValidFiles = changedAndModifiedFiles.length === 1
+const isValidCommittedFiles = committedFiles.length === 1
+core.debug(`Is valid committed files: ${isValidCommittedFiles}`)
 
-if (isValidFiles) {
+if (isValidCommittedFiles) {
 	// On valid files, set the output
-	core.setOutput('changed-or-modified-file', changedAndModifiedFiles[0])
+	const committedFile = committedFiles[0]
+	core.debug(`'committed-file' (output): ${committedFile}`)
+
+	core.setOutput('committed-file', committedFile)
 } else {
 	// On invalid files, set the action as failed
 	core.setFailed(
-		'Pull request must change or modified exactly one file. ' +
-			'Please, check the pull request and try again. ' +
+		'Pull request must commit just one file. ' +
+			'Please, check the pull request. ' +
 			'If you think this is an error, please contact an administrator.'
 	)
 }
