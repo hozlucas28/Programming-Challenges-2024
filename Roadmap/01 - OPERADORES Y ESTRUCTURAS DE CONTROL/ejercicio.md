@@ -1,7 +1,10 @@
 # #01 OPERADORES Y ESTRUCTURAS DE CONTROL
+
 > #### Dificultad: Fácil | Publicación: 02/01/24 | Corrección: 08/01/24
 
 ## Ejercicio
+
+cdadadsadsada
 
 ```
 /*
@@ -22,6 +25,7 @@
  * Seguro que al revisar detenidamente las posibilidades has descubierto algo nuevo.
  */
 ```
+
 #### Tienes toda la información extendida sobre el roadmap de retos de programación en **[retosdeprogramacion.com/roadmap](https://retosdeprogramacion.com/roadmap)**.
 
 Sigue las **[instrucciones](../../README.md)**, consulta las correcciones y aporta la tuya propia utilizando el lenguaje de programación que quieras.
