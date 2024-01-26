@@ -12,7 +12,7 @@
 	"main": "dist/index.js",
 	"name": "check-committed-files",
 	"scripts": {
-		"build": "ncc build main.js --minify --target es2022 --license licenses.txt"
+		"build": "ncc build main.js --license licenses.txt"
 	},
 	"type": "module",
 	"version": "1.0.0"
