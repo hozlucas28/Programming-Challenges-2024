@@ -12,4 +12,8 @@ pubspec.yaml
 pubspec.lock
 .venv
 *.class
-*.gradle 
+*.gradle
+.env
+hozlucas28.js
+node_modules/
+out/
